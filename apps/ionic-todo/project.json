@@ -1,0 +1,84 @@
+{
+  "name": "ionic-todo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/ionic-todo/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ionic-todo/www",
+        "index": "apps/ionic-todo/src/index.html",
+        "main": "apps/ionic-todo/src/main.ts",
+        "polyfills": "apps/ionic-todo/src/polyfills.ts",
+        "tsConfig": "apps/ionic-todo/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/ionic-todo/src/assets",
+            "output": "assets"
+          }
+        ],
+        "styles": [
+          "apps/ionic-todo/src/theme/variables.scss",
+          "apps/ionic-todo/src/global.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "ionic-todo:build:production"
+        },
+        "development": {
+          "buildTarget": "ionic-todo:build:development"
+        },
+        "ci": {
+          "progress": false
+        }
+      },
+      "defaultConfiguration": "development"
+    }
+  },
+
+  "cli": {
+    "schematicCollections": ["@ionic/angular-toolkit"]
+  },
+  "schematics": {
+    "@ionic/angular-toolkit:component": {
+      "styleext": "scss"
+    },
+    "@ionic/angular-toolkit:page": {
+      "styleext": "scss"
+    }
+  }
+}
